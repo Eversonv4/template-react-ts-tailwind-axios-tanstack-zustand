@@ -1,3 +1,92 @@
+# 🚀 React Enterprise Starter - Feature Architecture
+
+Este projeto utiliza uma das stacks mais modernas e robustas de 2026 para o ecossistema React. O foco principal é a **previsibilidade**, **testabilidade** e **facilidade de manutenção** através de uma arquitetura modular.
+
+## 🛠 Stack Tecnológica
+
+* **Runtime:** [Vite](https://vitejs.dev/) + React 19
+* **Linguagem:** TypeScript (Strict Mode)
+* **Roteamento:** [TanStack Router](https://tanstack.com/router) (Roteamento 100% tipado)
+* **Gerenciamento de Dados:** [TanStack Query](https://tanstack.com/query) + [Axios](https://axios-http.com/)
+* **Estado Global:** [Zustand](https://docs.pmnd.rs/zustand) (Minimalista e performático)
+* **Formulários:** React Hook Form + [Zod](https://zod.dev/)
+* **Estilização:** Tailwind CSS
+* **Testes:** Vitest + React Testing Library + MSW (Mock Service Worker)
+
+---
+
+## 🏗 Arquitetura baseada em Funcionalidades (Features)
+
+Diferente da estrutura tradicional, este projeto organiza o código por **Domínios de Negócio**. Isso permite que cada funcionalidade seja independente e fácil de escalar.
+
+\`\`\`text
+src/
+├── api/                # Instância do Axios, interceptors de Auth e configurações de rede
+├── components/         # Componentes de UI puramente globais e genéricos
+├── config/             # Variáveis de ambiente e constantes do sistema
+├── features/           # Núcleo da aplicação (Cada pasta é um módulo isolado)
+│   ├── auth/           # Login, recuperação de senha, lógica de sessão
+│   │   ├── api/        # Custom Hooks do TanStack Query (useLogin, useRegister)
+│   │   ├── components/ # Componentes exclusivos da autenticação
+│   │   ├── store/      # Zustand store para persistir dados do usuário/token
+│   │   └── types/      # Schemas Zod e definições TypeScript
+│   └── users/          # Exemplo de funcionalidade de usuários
+├── routes/             # Definição centralizada de rotas e Guardas de Rota (Guards)
+├── test/               # Utilitários de teste, wrappers e mocks do MSW
+└── utils/              # Funções puras, formatadores de data/moeda, etc.
+\`\`\`
+
+---
+
+## 🚦 Começando
+
+### 1. Instalação
+Certifique-se de estar usando o Node.js v20+ e execute:
+\`\`\`bash
+npm install
+\`\`\`
+
+### 2. Desenvolvimento
+Para rodar o projeto localmente com HMR (Hot Module Replacement):
+\`\`\`bash
+npm run dev
+\`\`\`
+
+### 3. Build de Produção
+Para gerar os arquivos otimizados na pasta \`dist\`:
+\`\`\`bash
+npm run build
+\`\`\`
+
+---
+
+## 🧪 Suíte de Testes
+
+A aplicação utiliza uma abordagem de testes de integração com interceptação de rede:
+
+* **Rodar Testes (Watch Mode):** \`npm test\`
+* **Interface Gráfica:** \`npm run test:ui\`
+* **Cobertura:** \`npm run coverage\`
+
+> **Nota:** Usamos o **MSW (Mock Service Worker)** para simular o backend. Os handlers de API ficam em \`src/test/mocks/handlers.ts\`.
+
+---
+
+## 🛡️ Roteamento e Proteção
+
+O projeto utiliza o **TanStack Router**. As rotas são definidas em \`src/routes/index.tsx\`.
+* **Type-safety:** Erros de navegação são pegos em tempo de compilação.
+* **Auth Guards:** Rotas privadas utilizam o hook \`beforeLoad\` para redirecionar usuários não autenticados antes mesmo da renderização do componente.
+
+---
+
+## 💡 Melhores Práticas Implementadas
+
+1.  **Validation First:** Todos os dados de entrada (Forms e API) passam pelo Zod.
+2.  **Path Aliases:** Utilize \`@/\` para importar arquivos de qualquer lugar (\`@/features/...\`).
+3.  **Headless UI:** Foco em componentes semânticos e acessíveis.
+
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

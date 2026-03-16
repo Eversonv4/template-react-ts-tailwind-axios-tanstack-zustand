@@ -1,7 +1,10 @@
-import { useGetUsers, useCreateUser } from '@/features/users/api/useUsers';
 import { useState } from 'react';
+import { useThemeStore } from '@/hooks/useThemeStore';
+import { useGetUsers, useCreateUser } from '@/features/users/api/useUsers';
+import { Sun, Moon } from 'lucide-react';
 
 export function UserDashboard() {
+  const { theme, toggleTheme } = useThemeStore();
   const { data: users, isLoading, isError } = useGetUsers();
   const createUserMutation = useCreateUser();
   const [userName, setUserName] = useState('');
@@ -16,34 +19,52 @@ export function UserDashboard() {
   if (isError) return <div className="p-8 text-red-500">Erro ao carregar dados.</div>;
 
   return (
-    <div className="p-8 max-w-2xl mx-auto">
-      <h1 className="text-2xl font-bold mb-6">Painel de Usuários</h1>
+    <div className="min-h-screen bg-slate-50 dark:bg-zinc-950 text-slate-900 dark:text-zinc-100 transition-colors duration-300">
+      <header className="p-4 flex justify-between items-center border-b dark:border-zinc-800">
+        <h1 className="text-xl font-bold">Meu Dashboard</h1>
 
-      {/* Seção de Adição */}
-      <div className="flex gap-2 mb-8">
-        <input
-          value={userName}
-          onChange={(e) => setUserName(e.target.value)}
-          className="border p-2 rounded flex-1 dark:bg-zinc-800"
-          placeholder="Nome do novo usuário"
-        />
         <button
-          onClick={handleAddUser}
-          disabled={createUserMutation.isPending}
-          className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 disabled:opacity-50"
+          onClick={toggleTheme}
+          className="p-2 rounded-full hover:bg-slate-200 dark:hover:bg-zinc-800"
         >
-          {createUserMutation.isPending ? 'Salvando...' : 'Adicionar'}
+          {theme === 'light' ? <Moon size={20} /> : <Sun size={20} />}
         </button>
-      </div>
+      </header>
 
-      {/* Lista de Usuários */}
-      <ul className="space-y-2">
-        {users?.map((user) => (
-          <li key={user.id} className="p-4 bg-white dark:bg-zinc-900 shadow rounded border border-zinc-200 dark:border-zinc-800">
-            {user.name}
-          </li>
-        ))}
-      </ul>
+      <main className="p-8">
+        <div className="p-8 max-w-2xl mx-auto">
+          <h1 className="text-2xl font-bold mb-6">Painel de Usuários</h1>
+
+          {/* Seção de Adição */}
+          <div className="flex gap-2 mb-8">
+            <input
+              value={userName}
+              onChange={(e) => setUserName(e.target.value)}
+              className="border p-2 rounded flex-1 dark:bg-zinc-800"
+              placeholder="Nome do novo usuário"
+            />
+            <button
+              onClick={handleAddUser}
+              disabled={createUserMutation.isPending}
+              className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 disabled:opacity-50"
+            >
+              {createUserMutation.isPending ? 'Salvando...' : 'Adicionar'}
+            </button>
+          </div>
+
+          {/* Lista de Usuários */}
+          <ul className="space-y-2">
+            {users?.map((user) => (
+              <li key={user.id} className="p-4 bg-white dark:bg-zinc-900 shadow rounded border border-zinc-200 dark:border-zinc-800">
+                {user.name}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="bg-white dark:bg-zinc-900 p-6 rounded-lg shadow-sm border dark:border-zinc-800">
+             <h2 className="dark:text-indigo-400">Conteúdo do Card</h2>
+        </div>
+      </main>
     </div>
   );
 }

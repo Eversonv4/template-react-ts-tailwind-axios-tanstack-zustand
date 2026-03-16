@@ -8,7 +8,11 @@ export const useGetUsers = () => {
     queryKey: ['users'],
     queryFn: async () => {
       const { data } = await api.get('/users');
-      return data;
+      // return data;
+      return [
+        { id: "1", name: 'João Silva' },
+        { id: "2", name: 'Dev Test' },
+      ]
     },
     staleTime: 1000 * 60 * 5, // 5 minutos de cache
   });

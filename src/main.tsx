@@ -3,6 +3,16 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
 
+const savedTheme = localStorage.getItem('theme-storage');
+if (savedTheme) {
+  const { state } = JSON.parse(savedTheme);
+  if (state.theme === 'dark') {
+    document.documentElement.classList.add('dark');
+  }
+} else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+  document.documentElement.classList.add('dark');
+}
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <App />
