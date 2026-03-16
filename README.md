@@ -19,7 +19,7 @@ Este projeto utiliza uma das stacks mais modernas e robustas de 2026 para o ecos
 
 Diferente da estrutura tradicional, este projeto organiza o código por **Domínios de Negócio**. Isso permite que cada funcionalidade seja independente e fácil de escalar.
 
-\`\`\`text
+```
 src/
 ├── api/                # Instância do Axios, interceptors de Auth e configurações de rede
 ├── components/         # Componentes de UI puramente globais e genéricos
@@ -34,7 +34,7 @@ src/
 ├── routes/             # Definição centralizada de rotas e Guardas de Rota (Guards)
 ├── test/               # Utilitários de teste, wrappers e mocks do MSW
 └── utils/              # Funções puras, formatadores de data/moeda, etc.
-\`\`\`
+```
 
 ---
 
@@ -68,7 +68,7 @@ A aplicação utiliza uma abordagem de testes de integração com interceptaçã
 * **Interface Gráfica:** \`npm run test:ui\`
 * **Cobertura:** \`npm run coverage\`
 
-> **Nota:** Usamos o **MSW (Mock Service Worker)** para simular o backend. Os handlers de API ficam em \`src/test/mocks/handlers.ts\`.
+> **Nota:** Foi usado o **MSW (Mock Service Worker)** para simular o backend. Os handlers de API ficam em \`src/test/mocks/handlers.ts\`.
 
 ---
 
@@ -85,6 +85,7 @@ O projeto utiliza o **TanStack Router**. As rotas são definidas em \`src/routes
 1.  **Validation First:** Todos os dados de entrada (Forms e API) passam pelo Zod.
 2.  **Path Aliases:** Utilize \`@/\` para importar arquivos de qualquer lugar (\`@/features/...\`).
 3.  **Headless UI:** Foco em componentes semânticos e acessíveis.
+
 
 
 # React + TypeScript + Vite
